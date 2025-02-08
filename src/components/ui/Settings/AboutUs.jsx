@@ -1,41 +1,93 @@
+import React, { useState, useRef, useEffect } from "react";
+import JoditEditor from "jodit-react";
+
+// import {
+//   useTermsAndConditionQuery,
+//   useUpdateTermsAndConditionsMutation,
+// } from "../../redux/apiSlices/termsAndConditionSlice";
+import toast from "react-hot-toast";
+import rentMeLogo from "../../../assets/logo.png";
+import Title from "../../common/Title";
+
 const AboutUs = () => {
+  const editor = useRef(null);
+  const [content, setContent] = useState("");
+
+  const isLoading = false;
+
+  useEffect(() => {
+    setContent(content);
+  }, []);
+
+  // const {
+  //   data: termsAndCondition,
+  //   isLoading,
+  //   refetch,
+  // } = useTermsAndConditionQuery(selectedTab);
+
+  // const [updateTermsAndConditions] = useUpdateTermsAndConditionsMutation();
+
+  const termsAndCondition = [];
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <img src={rentMeLogo} alt="" />
+      </div>
+    );
+  }
+
+  const termsAndConditionData = termsAndCondition?.content;
+
+  const termsDataSave = async () => {
+    const data = {
+      content: content,
+      userType: selectedTab,
+    };
+
+    try {
+      const res = await updateTermsAndConditions(data).unwrap();
+      if (res.success) {
+        toast.success("Terms and Conditions updated successfully");
+        setContent(res.data.content);
+        refetch();
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch {
+      throw new Error("Something Is wrong at try");
+    }
+  };
+
   return (
-    <div>
-      <h1 className="text-center text-3xl">About Us</h1>
-      <p className="my-5">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum quisquam,
-        nulla doloremque enim omnis mollitia dolor deserunt ipsam placeat
-        explicabo ratione nihil numquam beatae neque facilis ducimus dolore hic
-        ipsa rerum cum? Omnis, soluta praesentium ex modi libero animi quasi!
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo aperiam
-        fuga quisquam, nemo, error cupiditate sapiente maxime voluptas porro eum
-        nihil nisi. Aut tempore ducimus repellendus quos ipsum doloribus, eaque
-        cum ullam incidunt eum. Ducimus nam iste illo laudantium aspernatur?
-      </p>
-      <p className="my-5">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum quisquam,
-        nulla doloremque enim omnis mollitia dolor deserunt ipsam placeat
-        explicabo ratione nihil numquam beatae neque facilis ducimus dolore hic
-        ipsa rerum cum? Omnis, soluta praesentium ex modi libero animi quasi!
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo aperiam
-        fuga quisquam, nemo, error cupiditate sapiente maxime voluptas porro eum
-        nihil nisi. Aut tempore ducimus repellendus quos ipsum doloribus, eaque
-        cum ullam incidunt eum. Lorem ipsum, dolor sit amet consectetur
-        adipisicing elit. Corrupti facere repudiandae, expedita minus aliquid
-        dolor blanditiis reiciendis amet doloribus autem debitis earum et,
-        inventore libero deserunt similique nulla ducimus ut! Ducimus nam iste
-        illo laudantium aspernatur?
-      </p>
-      <p className="my-5">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum quisquam,
-        nulla doloremque enim omnis mollitia dolor deserunt ipsam placeat
-        explicabo ratione nihil numquam beatae neque facilis ducimus dolore hic
-        ipsa rerum cum? Omnis, soluta praesentium ex modi libero animi quasi!
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo aperiam
-        fuga quisquam, nemo, error cupiditate sapiente maxime voluptas porro eum
-        nihil nisi. Aut tempore ducimus repellendus quos ipsum doloribus, eaque
-        cum ullam incidunt eum. Ducimus nam iste illo laudantium aspernatur?
-      </p>
+    <div className="p-5 text-white">
+      <Title className="mb-4">About Us</Title>
+
+      <JoditEditor
+        ref={editor}
+        value={termsAndConditionData}
+        onChange={(newContent) => {
+          setContent(newContent);
+        }}
+        config={{
+          toolbarInline: true,
+          toolbarSticky: false,
+          style: {
+            backgroundColor: "#535045",
+            color: "white",
+          },
+        }}
+      />
+
+      <div className="flex items-center justify-center mt-5">
+        <button
+          onClick={termsDataSave}
+          type="submit"
+          className="bg-[#FFB342] text-black w-[160px] h-[42px] rounded-lg"
+        >
+          Submit
+        </button>
+      </div>
     </div>
   );
 };

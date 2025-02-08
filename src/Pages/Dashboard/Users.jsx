@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Table, Button, Space, Avatar } from "antd";
+import { Table, Button, Space, Avatar, ConfigProvider } from "antd";
 import { Link } from "react-router-dom";
 import randomImg from "../../assets/randomProfile2.jpg";
+import { FaEye, FaTrash } from "react-icons/fa6";
 
 const Users = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -246,45 +247,48 @@ const Users = () => {
         return <span style={{ color }}>{status}</span>;
       },
     },
-    {
-      title: "Fine",
-      dataIndex: "fine",
-      key: "fine",
-      render: (fine) =>
-        fine ? (
-          <span style={{ color: "red" }}>${fine}</span>
-        ) : (
-          <span className="text-green-700">No Fine</span>
-        ),
-    },
+
     {
       title: "Actions",
       key: "actions",
       render: (text, record) => (
         <Space>
           <Link to={`/user/profile/${record.id}`}>
-            <Button className="bg-[#FFF4E3] text-[#F3B806] border-none">
-              Details
-            </Button>
+            <FaEye size={20} />
           </Link>
-          <Button className="border border-red-600 text-red-700">
-            Restrict
-          </Button>
+          <div className="">
+            <FaTrash className="text-red-500" size={20} />
+          </div>
         </Space>
       ),
     },
   ];
 
   return (
-    <>
+    <div className="p-5">
       <h1 className="text-2xl font-semibold  my-5">Users</h1>
-      <Table
-        columns={columns}
-        dataSource={data}
-        pagination={{ pageSize, onChange: () => setPageSize() }}
-        scroll={{ x: 1000 }}
-      />
-    </>
+      <ConfigProvider
+        theme={{
+          components: {
+            Table: {
+              headerBg: "#6d5d36",
+              headerColor: "white",
+              selectedRowColor: "white",
+              colorBgContainer: "#1e1e1e",
+              colorText: "white",
+              borderColor: "#494949",
+            },
+          },
+        }}
+      >
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={{ pageSize, onChange: () => setPageSize() }}
+          scroll={{ x: 1000 }}
+        />
+      </ConfigProvider>
+    </div>
   );
 };
 

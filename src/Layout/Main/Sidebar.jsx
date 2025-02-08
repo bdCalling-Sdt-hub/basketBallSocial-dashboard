@@ -7,16 +7,13 @@ import {
   MdMiscellaneousServices,
 } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
 import { TbUserScreen } from "react-icons/tb";
 import { IoIosLogOut } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
-
 import { PiUserPlus } from "react-icons/pi";
 import { LuLayoutDashboard } from "react-icons/lu";
 import Cookies from "js-cookie";
-import logo from "../../assets/barberMeLogo.png";
-import { DiGoogleAnalytics } from "react-icons/di";
+import logo from "../../assets/logo.png";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { FaMoneyBillTransfer, FaScissors } from "react-icons/fa6";
 import { FaBorderStyle } from "react-icons/fa";
@@ -43,7 +40,7 @@ const Sidebar = () => {
       icon: <LuLayoutDashboard size={24} />,
       label: (
         <Link to="/" className="">
-          Dashboard
+          Analytics
         </Link>
       ),
     },
@@ -52,11 +49,11 @@ const Sidebar = () => {
     //   icon: <DiGoogleAnalytics size={24} />,
     //   label: <Link to="/transactions">Transactions</Link>,
     // },
-    {
-      key: "/banners",
-      icon: <MdFeaturedPlayList size={24} />,
-      label: <Link to="/banners">Banners</Link>,
-    },
+    // {
+    //   key: "/banners",
+    //   icon: <MdFeaturedPlayList size={24} />,
+    //   label: <Link to="/banners">Banners</Link>,
+    // },
     // {
     //   key: "/category",
     //   icon: <BiSolidCategoryAlt size={24} />,
@@ -68,59 +65,59 @@ const Sidebar = () => {
       label: <Link to="/users">Users</Link>,
     },
     {
-      key: "/vendors",
+      key: "/avatar-settings",
       icon: <PiUserPlus size={24} />,
-      label: <Link to="/vendors">Barbers</Link>,
+      label: <Link to="/avatar-settings">Avatar Settings</Link>,
     },
-    {
-      key: "subMenuSalon",
-      icon: <FaScissors size={24} />,
-      label: "Salon",
-      children: [
-        {
-          key: "/services",
-          icon: <MdMiscellaneousServices size={24} />,
-          label: (
-            <Link to="/services" className="text-white hover:text-white">
-              Services
-            </Link>
-          ),
-        },
-        {
-          key: "/salon-category",
-          icon: <BiSolidCategoryAlt size={24} />,
-          label: (
-            <Link to="/salon-category" className="text-white hover:text-white">
-              Category
-            </Link>
-          ),
-        },
-        {
-          key: "/sub-category",
-          icon: <MdCategory size={24} />,
-          label: (
-            <Link to="/sub-category" className="text-white hover:text-white">
-              Sub Category
-            </Link>
-          ),
-        },
-      ],
-    },
-    {
-      key: "/orders",
-      icon: <FaBorderStyle size={24} />,
-      label: <Link to="/orders">Orders</Link>,
-    },
-    {
-      key: "/cancellation",
-      icon: <MdCancelPresentation size={24} />,
-      label: <Link to="/cancellation">Cancellation</Link>,
-    },
+    // {
+    //   key: "subMenuSalon",
+    //   icon: <FaScissors size={24} />,
+    //   label: "Salon",
+    //   children: [
+    //     {
+    //       key: "/services",
+    //       icon: <MdMiscellaneousServices size={24} />,
+    //       label: (
+    //         <Link to="/services" className="text-white hover:text-white">
+    //           Services
+    //         </Link>
+    //       ),
+    //     },
+    //     {
+    //       key: "/salon-category",
+    //       icon: <BiSolidCategoryAlt size={24} />,
+    //       label: (
+    //         <Link to="/salon-category" className="text-white hover:text-white">
+    //           Category
+    //         </Link>
+    //       ),
+    //     },
+    //     {
+    //       key: "/sub-category",
+    //       icon: <MdCategory size={24} />,
+    //       label: (
+    //         <Link to="/sub-category" className="text-white hover:text-white">
+    //           Sub Category
+    //         </Link>
+    //       ),
+    //     },
+    //   ],
+    // },
     {
       key: "/our-transactions",
       icon: <FaMoneyBillTransfer size={24} />,
-      label: <Link to="/our-transactions">Transactions</Link>,
+      label: <Link to="/our-transactions">Avatar Transactions</Link>,
     },
+    {
+      key: "/admin",
+      icon: <FaBorderStyle size={24} />,
+      label: <Link to="/admin">Admin</Link>,
+    },
+    // {
+    //   key: "/cancellation",
+    //   icon: <MdCancelPresentation size={24} />,
+    //   label: <Link to="/cancellation">Cancellation</Link>,
+    // },
 
     {
       key: "subMenuSetting",
@@ -146,14 +143,14 @@ const Sidebar = () => {
             </Link>
           ),
         },
-        {
-          key: "/offer-list",
-          label: (
-            <Link to="/offer-list" className="text-white hover:text-white">
-              Offer List
-            </Link>
-          ),
-        },
+        // {
+        //   key: "/offer-list",
+        //   label: (
+        //     <Link to="/offer-list" className="text-white hover:text-white">
+        //       Offer List
+        //     </Link>
+        //   ),
+        // },
         {
           key: "/about-us",
           label: (
@@ -177,7 +174,7 @@ const Sidebar = () => {
           key: "/privacy-policy",
           label: (
             <Link to="/privacy-policy" className="text-white hover:text-white">
-              Privacy Policy
+              App Support
             </Link>
           ),
         },
@@ -225,15 +222,13 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="mt-5 overflow-y-scroll">
-      <div className="px-10">
-        <Link
-          to={"/"}
-          className="mb-10 flex items-center flex-col gap-2 justify-center py-4"
-        >
-          <img src={logo} alt="" />
-        </Link>
-      </div>
+    <div className="mt-5 overflow-y-scroll ">
+      <Link to={"/"} className="">
+        <div className="flex items-center pb-2 w-full mb-14 gap-5 justify-center">
+          <img src={logo} alt="" className="w-14 h-14" />
+          <h1 className="text-2xl font-bold text-[#C4A862]">Baller World</h1>
+        </div>
+      </Link>
       <Menu
         mode="inline"
         selectedKeys={[selectedKey]}

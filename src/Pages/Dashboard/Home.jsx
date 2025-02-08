@@ -5,6 +5,9 @@ import rentMeLogo from "../../assets/navLogo.png";
 import UserEngagement from "../../components/ui/Home/UserEngagement";
 import GeneralStateSection from "../../components/ui/Home/GeneralStateSection";
 import Professionals from "../../components/ui/Home/Professionals";
+import AppsPerformanceStatisticsChart from "../../components/ui/Home/AppsPerformanceStatistics";
+import UserUpdatesCharts from "../../components/ui/Home/UserUpdates";
+import EarningStatisticsChart from "../../components/ui/Home/EarningStatistics";
 
 const Home = () => {
   const orderSummary = {
@@ -23,18 +26,16 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className="bg-black">
       <GeneralStateSection />
-      <div className="md:flex w-full items-center gap-6 mt-6">
-        <div className="md:w-5/12 bg-white border rounded-2xl py-3 flex flex-col justify-center">
-          <p className="text-base font-semibold px-4 py-">
-            Sales and Revenue Tracking
-          </p>
-          <SalesTrackingChart />
+      <div className=" w-full items-center  gap-6 mt-2">
+        <div className="w-full bg-[#1e1e1e]  rounded-2xl py-3 flex flex-col justify-center">
+          {/* <SalesTrackingChart /> */}
+          <AppsPerformanceStatisticsChart />
         </div>
-        <div className="md:w-7/12 md:flex gap-4">
-          <Professionals />
-          <div className="md:w-[40%] border rounded-2xl bg-white p-4 flex flex-col items-center">
+        <div className="gap-4">
+          {/* <Professionals /> */}
+          {/* <div className="md:w-[40%] border rounded-2xl bg-white p-4 flex flex-col items-center">
             <h1 className="text-lg font-semibold mb-4">Order Summary</h1>
 
             <div className="relative w-40 h-40 mb-6">
@@ -87,16 +88,18 @@ const Home = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
-      <div className="w-full md:flex gap-6">
-        <div className="md:w-5/12 my-6 ">
+      <div className="w-full md:flex gap-2">
+        <div className="md:w-6/12 my-2 bg-[#1e1e1e] rounded-2xl">
           {" "}
-          <RunningOrdersTable />
+          {/* <RunningOrdersTable /> */}
+          <UserUpdatesCharts />
         </div>
-        <div className="md:w-7/12 my-6 ">
-          <UserEngagement />
+        <div className="md:w-6/12 my-2 bg-[#1e1e1e] rounded-2xl">
+          {/* <UserEngagement /> */}
+          <EarningStatisticsChart />
         </div>
       </div>
     </div>

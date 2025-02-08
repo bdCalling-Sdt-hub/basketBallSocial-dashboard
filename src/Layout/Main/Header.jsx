@@ -18,14 +18,14 @@ const Header = () => {
   }
 
   return (
-    <div className="flex items-center gap-5 justify-end">
+    <div className="flex items-center gap-5 text-white justify-end">
       <Link to="/notification" className="h-fit mt-[10px]">
         <Badge count={5}>
-          <FaRegBell color="#4E4E4E" size={24} />
+          <FaRegBell color="#ffffff" size={24} />
         </Badge>
       </Link>
 
-      <div className="flex gap-2 items-center justify-center border-4 p-1 rounded-full">
+      <div className="flex gap-2 items-center justify-center">
         <img
           style={{
             clipPath: "circle()",

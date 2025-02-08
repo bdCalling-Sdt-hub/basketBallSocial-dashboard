@@ -11,12 +11,12 @@ import {
 const PrivacyPolicy = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
-  const [selectedTab, setSelectedTab] = useState("USER");
+
   const isLoading = false;
 
   useEffect(() => {
     setContent(content);
-  }, [selectedTab]);
+  }, []);
 
   // const {
   //   data: privacyPolicy,
@@ -59,46 +59,21 @@ const PrivacyPolicy = () => {
     }
   };
 
-  const tabContent = {
-    USER: privacyPolicyData,
-    VENDOR: privacyPolicyData,
-    CUSTOMER: privacyPolicyData,
-  };
-
   return (
-    <div>
+    <div className="p-5 text-white">
       <Title className="mb-4">Privacy Policy</Title>
-
-      <div className="flex justify-center gap-4 mb-4">
-        <button
-          className={`px-4 rounded-2xl py-2 ${
-            selectedTab === "USER" ? "bg-primary text-white" : "bg-gray-200"
-          }`}
-          onClick={() => setSelectedTab("USER")}
-        >
-          Users
-        </button>
-        <button
-          className={`px-4 rounded-2xl py-2 ${
-            selectedTab === "VENDOR" ? "bg-primary text-white" : "bg-gray-200"
-          }`}
-          onClick={() => setSelectedTab("VENDOR")}
-        >
-          Vendors
-        </button>
-        <button
-          className={`px-4 rounded-2xl py-2 ${
-            selectedTab === "CUSTOMER" ? "bg-primary text-white" : "bg-gray-200"
-          }`}
-          onClick={() => setSelectedTab("CUSTOMER")}
-        >
-          Customers
-        </button>
-      </div>
 
       <JoditEditor
         ref={editor}
-        value={tabContent[selectedTab]}
+        value={privacyPolicyData}
+        config={{
+          toolbarInline: true,
+          toolbarSticky: false,
+          style: {
+            backgroundColor: "#535045",
+            color: "white",
+          },
+        }}
         onChange={(newContent) => {
           setContent(newContent);
         }}
@@ -108,7 +83,7 @@ const PrivacyPolicy = () => {
         <button
           onClick={termsDataSave}
           type="submit"
-          className="bg-primary text-white w-[160px] h-[42px] rounded-lg"
+          className="bg-[#FFB342] text-black w-[160px] h-[42px] rounded-lg"
         >
           Submit
         </button>

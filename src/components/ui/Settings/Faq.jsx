@@ -47,30 +47,30 @@ const Faq = () => {
   ];
 
   return (
-    <div className="">
-      <div className=" mb-4 flex justify-between items-center w-full">
+    <div className=" p-5 text-white">
+      <div className="mb-4 flex justify-between items-center w-full">
         <button
           onClick={() => setOpenAddModel(true)}
-          className="flex items-center gap-1 px-4 py-2 text-white bg-primary rounded hover:bg-secondary hover:text-black transition-colors"
+          className="flex items-center gap-1 px-4 py-2 text-black bg-[#ffb342] rounded hover:bg-secondary hover:text-black transition-colors"
         >
           <FaPlus />
           Add FAQ
         </button>
       </div>
 
-      <div className=" pb-6 px-4 rounded-md">
+      <div className="bg-black p-1 pb-6 rounded-md">
         {faqInfo?.map((item, index) => (
           <div
             key={index}
-            className="flex justify-between items-start gap-4 py-4 px-4 rounded-lg bg-white mb-3"
+            className="flex justify-between items-start gap-4 p-4 rounded-lg bg-[#1e1e1e] mb-3"
           >
-            <GoQuestion color="#8b0000" size={25} className="mt-3" />
+            <GoQuestion color="#ffb342" size={25} className="mt-3" />
             <div className="flex-1">
               <p className="text-base font-medium rounded-xl py-2 px-4 flex items-center gap-8">
-                <span className="flex-1">{item?.question}</span>
+                <span className="flex-1 text-white">{item?.question}</span>
               </p>
               <div className=" rounded-xl py-2 px-4 mt-4">
-                <p className="text-[#919191] leading-6">{item?.answer}</p>
+                <p className="text-[#b3b3b3] leading-6">{item?.answer}</p>
               </div>
             </div>
             <div className="flex items-center gap-2 pt-4">

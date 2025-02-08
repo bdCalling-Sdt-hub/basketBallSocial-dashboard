@@ -1,7 +1,7 @@
-import { Form, Input, Modal } from 'antd';
-import React from 'react';
+import { Form, Input, Modal } from "antd";
+import React from "react";
 
-const CreateAdmin = ({ open, setOpen }) => { 
+const CreateAdmin = ({ open, setOpen }) => {
   const [form] = Form.useForm();
 
   const handleClose = () => {
@@ -19,12 +19,14 @@ const CreateAdmin = ({ open, setOpen }) => {
     >
       <div className="p-6 mt-4">
         <h1 className="font-semibold text-[#555555] text-xl mb-3">Add Admin</h1>
-        
-        <Form form={form} layout='vertical'>
+
+        <Form form={form} layout="vertical">
           <Form.Item
             label="Name"
             name="fullName"
-            rules={[{ required: true, message: "Please enter the admin's name" }]}
+            rules={[
+              { required: true, message: "Please enter the admin's name" },
+            ]}
             className="text-[#6D6D6D] py-1"
           >
             <Input className="w-full border outline-none px-3 py-[10px]" />
@@ -33,7 +35,9 @@ const CreateAdmin = ({ open, setOpen }) => {
           <Form.Item
             label="Email"
             name="email"
-            rules={[{ required: true, message: "Please enter the admin's email" }]}
+            rules={[
+              { required: true, message: "Please enter the admin's email" },
+            ]}
             className="text-[#6D6D6D] py-1"
           >
             <Input className="w-full border outline-none px-3 py-[10px]" />
@@ -51,7 +55,7 @@ const CreateAdmin = ({ open, setOpen }) => {
           <Form.Item className="text-center mt-6">
             <button
               type="submit"
-              className="bg-primary text-white w-40 h-11 rounded-lg"
+              className="bg-[#6d5d36] text-white w-40 h-11 rounded-lg"
             >
               Create
             </button>

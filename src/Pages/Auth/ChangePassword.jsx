@@ -56,7 +56,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="bg-white p-5 rounded-2xl h-[700px]">
+    <div className="p-5 rounded-2xl h-[700px]">
       <Form
         layout="vertical"
         form={form} // Connect the form instance
@@ -65,7 +65,7 @@ const ChangePassword = () => {
       >
         <Form.Item
           name="currentPassword"
-          label={<p>Current Password</p>}
+          label={<p className="text-white">Current Password</p>}
           rules={[
             {
               required: true,
@@ -74,7 +74,7 @@ const ChangePassword = () => {
           ]}
         >
           <Input.Password
-            style={{ background: "transparent" }}
+            style={{ background: "transparent", color: "white" }}
             placeholder="Enter current password"
             className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500"
           />
@@ -92,10 +92,10 @@ const ChangePassword = () => {
               message: "Please Enter New Password!",
             },
           ]}
-          label={<p>New Password</p>}
+          label={<p className="text-white">New Password</p>}
         >
           <Input.Password
-            style={{ background: "transparent" }}
+            style={{ background: "transparent", color: "white" }}
             placeholder="Enter new password"
             className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500"
           />
@@ -106,8 +106,10 @@ const ChangePassword = () => {
         )}
 
         <Form.Item
-          label={<p>Confirm Password</p>}
+          label={<p className="text-white">Confirm Password</p>}
           name="confirmPassword"
+          dependencies={["newPassword"]}
+          hasFeedback
           rules={[
             {
               required: true,
@@ -116,7 +118,7 @@ const ChangePassword = () => {
           ]}
         >
           <Input.Password
-            style={{ background: "transparent" }}
+            style={{ background: "transparent", color: "white" }}
             placeholder="Enter confirm password"
             className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500"
           />
@@ -137,8 +139,8 @@ const ChangePassword = () => {
               width: 178,
               height: 48,
               fontWeight: "400px",
-              background: "#8b0000",
-              color: "white",
+              background: "#ffb342",
+              color: "black",
             }}
             className="roboto-medium text-sm leading-4"
           >

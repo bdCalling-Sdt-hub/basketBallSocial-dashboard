@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Input } from "antd";
+import { Button, ConfigProvider, Form, Input } from "antd";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
@@ -91,14 +91,14 @@ const PersonalInfo = () => {
   };
 
   return (
-    <div>
+    <div className="p-5 text-white">
       <Link to="/" className="flex items-center gap-[2px] text-base rounded-lg">
         <span>
           <BiLeftArrowAlt size={22} />
         </span>
-        <span>Back</span>
+        <span className="text-white">Back</span>
       </Link>
-      <div className="flex bg-white p-10 mt-10 rounded-2xl border gap-10 w-full">
+      <div className="flex p-10 mt-10 rounded-2xl border gap-10 w-full">
         <div className="w-8/12">
           <Form
             form={form}
@@ -108,32 +108,74 @@ const PersonalInfo = () => {
           >
             <Form.Item
               name="name"
-              label="Name"
+              label={<p className="text-[#ffffff] py-1">Name</p>}
               rules={[{ required: true, message: "Please enter your name" }]}
             >
-              <Input className="py-3 bg-gray-100 rounded-xl" />
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Input: {
+                      colorBgContainer: "#535045",
+                      backgroundColor: "#535045",
+                      colorBgInput: "#535045",
+                      hoverColorBgInput: "#535045",
+                      colorText: "#ffffff",
+                    },
+                  },
+                }}
+              >
+                <Input className="py-3 rounded-xl" />
+              </ConfigProvider>
             </Form.Item>
 
             <Form.Item
               name="email"
-              label="Email"
+              label={<p className="text-[#ffffff] py-1">Email</p>}
               rules={[
                 { type: "email", message: "Please enter a valid email" },
                 { required: true, message: "Please enter your email" },
               ]}
             >
-              <Input readOnly className="py-3 bg-gray-100 rounded-xl" />
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Input: {
+                      colorBgContainer: "#535045",
+                      backgroundColor: "#535045",
+                      colorBgInput: "#535045",
+                      hoverColorBgInput: "#535045",
+                      colorText: "#ffffff",
+                    },
+                  },
+                }}
+              >
+                <Input className="py-3 rounded-xl" />
+              </ConfigProvider>
             </Form.Item>
             <Form.Item
               name="address"
-              label="Address"
+              label={<p className="text-[#ffffff] py-1">Address</p>}
               rules={[{ required: true, message: "Please enter your Address" }]}
             >
-              <Input className="py-3 bg-gray-100 rounded-xl" />
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Input: {
+                      colorBgContainer: "#535045",
+                      backgroundColor: "#535045",
+                      colorBgInput: "#535045",
+                      hoverColorBgInput: "#535045",
+                      colorText: "#ffffff",
+                    },
+                  },
+                }}
+              >
+                <Input className="py-3 rounded-xl" />
+              </ConfigProvider>
             </Form.Item>
 
             <Form.Item
-              label="Phone"
+              label={<p className="text-[#ffffff] py-1">Phone</p>}
               name="phone"
               rules={[
                 { required: true, message: "Please enter your phone number" },
@@ -143,7 +185,7 @@ const PersonalInfo = () => {
                 country="us"
                 value={contact}
                 onChange={setContact}
-                inputClass="!w-full !px-4 !py-3 !py-5 !ps-12 !border !border-gray-300 !rounded-lg !focus:outline-none !focus:ring-2 !focus:ring-blue-400"
+                inputClass="!w-full !px-4 !py-3 !py-5 !bg-[#535045] !ps-12 !border !border-gray-300 !rounded-lg !focus:outline-none !focus:ring-2 !focus:ring-blue-400"
                 containerClass="!w-full"
               />
             </Form.Item>
@@ -156,8 +198,8 @@ const PersonalInfo = () => {
                   width: 178,
                   height: 48,
                   fontWeight: "400px",
-                  background: "#8b0000",
-                  color: "white",
+                  background: "#ffb342",
+                  color: "black",
                 }}
                 className="roboto-medium mt-10 text-sm leading-4"
               >
@@ -167,7 +209,7 @@ const PersonalInfo = () => {
           </Form>
         </div>
         <div>
-          <div className="flex flex-col items-center gap-10 bg-slate-100 px-20 py-12 rounded-xl justify-center">
+          <div className="flex flex-col items-center gap-10  px-20 py-12 rounded-xl justify-center">
             <input
               onChange={onChangeImage}
               type="file"
@@ -179,10 +221,10 @@ const PersonalInfo = () => {
               className="relative w-48 h-48 cursor-pointer rounded-full border border-primary bg-white bg-cover bg-center"
               style={{ backgroundImage: `url(${imgURL ? imgURL : logo})` }}
             >
-              <div className="absolute bottom-1 right-1 w-12 h-12 rounded-full border-2 border-primary bg-gray-100 flex items-center justify-center">
+              <div className="absolute bottom-1 right-1 w-12 h-12 rounded-full border-2 border-[#ffb342] bg-gray-100 flex items-center justify-center">
                 <MdOutlineAddPhotoAlternate
                   size={22}
-                  className="text-primary"
+                  className="text-[#ffb342]"
                 />
               </div>
             </label>

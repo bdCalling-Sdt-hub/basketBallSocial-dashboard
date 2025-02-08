@@ -1,63 +1,70 @@
 import React, { useState } from "react";
-import { Table, DatePicker } from "antd";
+import { Table, ConfigProvider } from "antd";
 import moment from "moment";
-
-const { RangePicker } = DatePicker;
 
 const transactions = [
   {
     key: "1",
-    transactionId: "TXN001",
-    customerName: "John Doe",
-    serviceName: "Haircut",
-    barberName: "Mike Johnson",
-    price: 100,
-    adminEarning: 15,
+    transactionId: "AVT001",
+    customerName: "Alice Johnson",
+    packageName: "Basic Avatar Pack",
+    price: 20,
+    adminEarning: 3,
     date: "2024-06-15 10:30:00",
   },
   {
     key: "2",
-    transactionId: "TXN002",
-    customerName: "Jane Smith",
-    serviceName: "Hair Color",
-    barberName: "Sarah Brown",
-    price: 200,
-    adminEarning: 30,
+    transactionId: "AVT002",
+    customerName: "Michael Brown",
+    packageName: "Premium Avatar Pack",
+    price: 50,
+    adminEarning: 7.5,
     date: "2024-06-14 14:45:00",
   },
   {
     key: "3",
-    transactionId: "TXN003",
-    customerName: "Robert White",
-    serviceName: "Beard Trim",
-    barberName: "David Green",
-    price: 80,
-    adminEarning: 12,
+    transactionId: "AVT003",
+    customerName: "Samantha White",
+    packageName: "Exclusive Avatar Pack",
+    price: 100,
+    adminEarning: 15,
     date: "2024-06-16 09:15:00",
   },
-  // Add 12 more transactions
   {
-    key: "15",
-    transactionId: "TXN015",
-    customerName: "Henry Miller",
-    serviceName: "Haircut",
-    barberName: "Daniel King",
-    price: 115,
-    adminEarning: 17.25,
-    date: "2024-06-04 12:30:00",
+    key: "4",
+    transactionId: "AVT004",
+    customerName: "Daniel Green",
+    packageName: "Basic Avatar Pack",
+    price: 20,
+    adminEarning: 3,
+    date: "2024-06-10 11:00:00",
+  },
+  {
+    key: "5",
+    transactionId: "AVT005",
+    customerName: "Sophia Miller",
+    packageName: "Deluxe Avatar Pack",
+    price: 75,
+    adminEarning: 11.25,
+    date: "2024-06-12 17:20:00",
+  },
+  {
+    key: "6",
+    transactionId: "AVT006",
+    customerName: "Ethan Wilson",
+    packageName: "Ultimate Avatar Pack",
+    price: 150,
+    adminEarning: 22.5,
+    date: "2024-06-13 08:45:00",
   },
 ];
 
 const OurTransactions = () => {
-  const [filteredData, setFilteredData] = useState(transactions);
-
   const columns = [
     {
-      title: "Date & Time",
-      dataIndex: "date",
-      key: "date",
-      sorter: (a, b) => moment(a.date).valueOf() - moment(b.date).valueOf(),
-      render: (date) => moment(date).format("DD-MM-YYYY HH:mm A"),
+      title: "Serial No.",
+      dataIndex: "key",
+      key: "key",
     },
     {
       title: "Transaction ID",
@@ -65,8 +72,11 @@ const OurTransactions = () => {
       key: "transactionId",
     },
     { title: "Customer Name", dataIndex: "customerName", key: "customerName" },
-    { title: "Service Name", dataIndex: "serviceName", key: "serviceName" },
-    { title: "Barber Name", dataIndex: "barberName", key: "barberName" },
+    {
+      title: "Package Name",
+      dataIndex: "packageName",
+      key: "packageName",
+    },
     {
       title: "Price ($)",
       dataIndex: "price",
@@ -74,28 +84,39 @@ const OurTransactions = () => {
       sorter: (a, b) => a.price - b.price,
     },
     {
-      title: "Admin Earning ($)",
-      dataIndex: "adminEarning",
-      key: "adminEarning",
-      render: (earning) => (
-        <span className="text-green-600 font-medium">
-          ${earning.toFixed(2)}
-        </span>
-      ),
-      sorter: (a, b) => a.adminEarning - b.adminEarning,
+      title: "Date & Time",
+      dataIndex: "date",
+      key: "date",
+      sorter: (a, b) => moment(a.date).valueOf() - moment(b.date).valueOf(),
+      render: (date) => moment(date).format("DD-MM-YYYY HH:mm A"),
     },
   ];
 
   return (
-    <div className="p-4">
+    <div className="bg-[#1e1e1e] p-5">
       <h1 className="text-2xl font-semibold mb-4 text-start">
-        Our Transactions
+        Avatar Purchase Transactions
       </h1>
-      <Table
-        columns={columns}
-        dataSource={filteredData}
-        pagination={{ pageSize: 5 }}
-      />
+      <ConfigProvider
+        theme={{
+          components: {
+            Table: {
+              headerBg: "#6d5d36",
+              headerColor: "white",
+              selectedRowColor: "white",
+              colorBgContainer: "#1e1e1e",
+              colorText: "white",
+              borderColor: "#494949",
+            },
+          },
+        }}
+      >
+        <Table
+          columns={columns}
+          dataSource={transactions}
+          pagination={{ pageSize: 5 }}
+        />
+      </ConfigProvider>
     </div>
   );
 };
