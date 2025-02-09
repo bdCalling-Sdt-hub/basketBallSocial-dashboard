@@ -41,6 +41,8 @@ import Services from "../Pages/Dashboard/Salon/Services";
 import Category from "../Pages/Dashboard/Salon/Category";
 import SubCategory from "../Pages/Dashboard/Salon/SubCategory";
 import Vendor from "../Pages/Dashboard/Vendor";
+import AvatarSettings from "../Pages/AvatarSettings/AvatarSettings";
+import SingleAvatarSettings from "../Pages/AvatarSettings/SingleAvatarSettings";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +65,14 @@ const router = createBrowserRouter([
       {
         path: "/add-banner",
         element: <AddBanners />,
+      },
+      {
+        path: "/avatar-settings",
+        element: <AvatarSettings />,
+      },
+      {
+        path: "/avatar-settings/:id",
+        element: <SingleAvatarSettings />,
       },
       {
         path: "/banners",

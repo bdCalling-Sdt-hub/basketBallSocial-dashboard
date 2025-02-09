@@ -95,15 +95,15 @@ const Notifications = () => {
   );
 
   return (
-    <div>
+    <div className="p-5 text-white">
       <div className="flex items-center justify-between mb-4">
         <Title className="text-[22px]">All Notifications</Title>
-        <button className="bg-[#5c2579cc] text-white h-10 px-4 rounded-md">
+        <button className="bg-primary text-black h-10 px-4 rounded-md">
           Read All
         </button>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 bg-white p-4 rounded-lg">
+      <div className="grid grid-cols-1 gap-5 bg-[#181818] p-10 rounded-2xl">
         {paginatedData.map((notification) => (
           <div
             key={notification.id}
