@@ -26,10 +26,10 @@ const data = [
 
 const EarningStatisticsChart = () => {
   return (
-    <div style={{ width: "100%", height: 330 }} className="px-5 py-3">
+    <div style={{ width: "100%", height: 335 }} className="px-5 py-3">
       <h4 className="mb-5 mt-4">Earning Statistic</h4>
 
-      <ResponsiveContainer width="100%" height={250}>
+      <ResponsiveContainer width="100%" height={240}>
         <AreaChart
           data={data}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}

@@ -30,10 +30,10 @@ const data = [
 
 const AppsPerformanceStatisticsChart = () => {
   return (
-    <div style={{ width: "100%", height: 330 }} className="px-5 py-3">
+    <div style={{ width: "100%", height: 320 }} className="px-5 py-3">
       <h4 className="mb-5">App’s Performance Statistic</h4>
 
-      <ResponsiveContainer width="100%" height={250}>
+      <ResponsiveContainer width="100%" height={240}>
         <LineChart
           data={data}
           syncId="anyId"

@@ -30,10 +30,10 @@ const data = [
 
 const UserUpdatesCharts = () => {
   return (
-    <div style={{ width: "100%", height: 330 }} className="px-5 py-3">
+    <div style={{ width: "100%", height: 335 }} className="px-5 py-3">
       <h4 className="mb-5 mt-4">Users Update</h4>
 
-      <ResponsiveContainer width="100%" height={250}>
+      <ResponsiveContainer width="100%" height={240}>
         <LineChart
           data={data}
           syncId="anyId"

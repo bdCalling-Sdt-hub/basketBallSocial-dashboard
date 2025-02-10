@@ -27,7 +27,7 @@ const GeneralStateSection = () => {
   const state = generalState?.data;
 
   return (
-    <div className="grid md:grid-cols-3 gap-2 md:h-[130px]">
+    <div className="grid md:grid-cols-3 gap-2 md:h-[120px]">
       <div className="bg-[#1e1e1e] rounded-2xl py-0 px-6 flex items-center justify-start gap-4">
         <div className="w-16 h-16 rounded-full flex items-center justify-center">
           <FaUsers color="white" size={30} />
