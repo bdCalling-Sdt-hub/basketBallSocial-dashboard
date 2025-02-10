@@ -115,7 +115,7 @@ const Login = () => {
               fontSize: 18,
               marginTop: 20,
             }}
-            className={`flex items-center justify-center bg-primary text-white rounded-lg`}
+            className={`flex items-center justify-center bg-primary rounded-lg`}
           >
             Sign in
           </button>
