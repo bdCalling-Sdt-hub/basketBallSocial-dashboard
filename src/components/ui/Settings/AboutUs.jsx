@@ -6,7 +6,7 @@ import JoditEditor from "jodit-react";
 //   useUpdateTermsAndConditionsMutation,
 // } from "../../redux/apiSlices/termsAndConditionSlice";
 import toast from "react-hot-toast";
-import rentMeLogo from "../../../assets/logo.png";
+import logo from "../../../assets/logo.png";
 import Title from "../../common/Title";
 
 const AboutUs = () => {
@@ -32,7 +32,7 @@ const AboutUs = () => {
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <img src={rentMeLogo} alt="" />
+        <img src={logo} alt="" />
       </div>
     );
   }
