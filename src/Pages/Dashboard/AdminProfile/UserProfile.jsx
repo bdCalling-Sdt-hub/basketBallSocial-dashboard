@@ -112,7 +112,10 @@ const PersonalInfo = () => {
               label={<p className="text-[#ffffff] py-1">Name</p>}
               rules={[{ required: true, message: "Please enter your name" }]}
             >
-              <Input className="py-3 rounded-xl" />
+              <Input
+                style={{ background: "#535045", color: "white" }}
+                className="py-3 rounded-xl"
+              />
             </Form.Item>
 
             <Form.Item
@@ -123,14 +126,22 @@ const PersonalInfo = () => {
                 { required: true, message: "Please enter your email" },
               ]}
             >
-              <Input className="py-3 rounded-xl" readOnly />
+              <Input
+                style={{ background: "#535045", color: "white" }}
+                className="py-3 rounded-xl"
+                readOnly
+              />
             </Form.Item>
             <Form.Item
               name="role"
               label={<p className="text-[#ffffff] py-1">Role</p>}
               rules={[{ required: true, message: "Please enter your role" }]}
             >
-              <Input className="py-3 rounded-xl" readOnly />
+              <Input
+                style={{ background: "#535045", color: "white" }}
+                className="py-3 rounded-xl"
+                readOnly
+              />
             </Form.Item>
 
             <Form.Item
@@ -140,7 +151,10 @@ const PersonalInfo = () => {
                 { required: true, message: "Please enter your phone number" },
               ]}
             >
-              <Input className="py-3 rounded-xl" />
+              <Input
+                style={{ background: "#535045", color: "white" }}
+                className="py-3 rounded-xl"
+              />
             </Form.Item>
 
             <Form.Item>
@@ -148,13 +162,13 @@ const PersonalInfo = () => {
                 htmlType="submit"
                 block
                 style={{
-                  width: 178,
+                  width: 200,
                   height: 48,
-                  fontWeight: "400px",
-                  background: "#ffb342",
+                  fontWeight: "600px",
+                  background: "#C4A862",
                   color: "black",
                 }}
-                className="roboto-medium mt-10 text-sm leading-4"
+                className="roboto-medium mt-10 text-lg leading-4"
               >
                 Save and Change
               </Button>

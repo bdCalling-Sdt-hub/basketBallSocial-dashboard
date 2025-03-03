@@ -4,13 +4,44 @@ import { GoQuestion } from "react-icons/go";
 import { CiEdit } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
 import FaqModal from "../../ui/FAQ/FaqModal";
+import {
+  useDeleteFaqMutation,
+  useGetAllFaqsQuery,
+} from "../../../redux/apiSlices/faqSlice";
+import logo from "../../../assets/logo.png";
+import toast from "react-hot-toast";
 
 const Faq = () => {
   const [openAddModel, setOpenAddModel] = useState(false);
   const [modalData, setModalData] = useState(null);
 
+  const { data: faqs, isLoading } = useGetAllFaqsQuery();
+  const [deleteFaq] = useDeleteFaqMutation();
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <img src={logo} alt="" />
+      </div>
+    );
+  }
+
+  const faqData = faqs?.data;
+  console.log(faqData);
+
   const handleDelete = async (id) => {
-    // Handle delete logic here
+    try {
+      const response = await deleteFaq(id).unwrap();
+      if (response?.success) {
+        toast.success(response?.message);
+      } else {
+        toast.error(response?.message);
+      }
+    } catch (error) {
+      toast.error(
+        error?.data?.message || "An error occurred. Please try again."
+      );
+    }
   };
 
   const faqInfo = [
@@ -58,11 +89,11 @@ const Faq = () => {
         </button>
       </div>
 
-      <div className="bg-black p-1 pb-6 rounded-md">
-        {faqInfo?.map((item, index) => (
+      <div className="bg-black p-1 space-y-1 rounded-md">
+        {faqData?.map((item, index) => (
           <div
             key={index}
-            className="flex justify-between items-start gap-4 p-4 rounded-lg bg-[#1e1e1e] mb-3"
+            className="flex justify-between items-start gap-4 p-4 rounded-lg bg-[#1e1e1e]"
           >
             <GoQuestion color="#ffb342" size={25} className="mt-3" />
             <div className="flex-1">

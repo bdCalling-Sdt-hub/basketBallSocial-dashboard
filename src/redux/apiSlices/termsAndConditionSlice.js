@@ -5,27 +5,40 @@ const termsAndConditionSlice = api.injectEndpoints({
     updateTermsAndConditions: builder.mutation({
       query: (data) => {
         return {
-          url: `/others/terms-and-condition`,
+          url: `/rule/terms-and-conditions`,
           method: "POST",
           body: data,
-          headers: {
-            Authorization: `Bearer ${JSON.parse(
-              localStorage.getItem("token")
-            )}`,
-          },
         };
       },
     }),
     termsAndCondition: builder.query({
-      query: (userType) => {
+      query: () => {
         return {
-          url: `/others/terms-and-conditions/${userType}`,
+          url: `/rule/terms-and-conditions`,
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${JSON.parse(
-              localStorage.getItem("token")
-            )}`,
-          },
+        };
+      },
+      transformResponse: ({ data }) => {
+        return data;
+      },
+    }),
+
+    //about us
+
+    createAboutUs: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/rule/about`,
+          method: "POST",
+          body: data,
+        };
+      },
+    }),
+    aboutUs: builder.query({
+      query: () => {
+        return {
+          url: `/rule/about`,
+          method: "GET",
         };
       },
       transformResponse: ({ data }) => {
@@ -38,4 +51,6 @@ const termsAndConditionSlice = api.injectEndpoints({
 export const {
   useTermsAndConditionQuery,
   useUpdateTermsAndConditionsMutation,
+  useCreateAboutUsMutation,
+  useAboutUsQuery,
 } = termsAndConditionSlice;

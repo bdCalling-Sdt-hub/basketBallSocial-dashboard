@@ -8,26 +8,22 @@ import JoditEditor from "jodit-react";
 import toast from "react-hot-toast";
 import logo from "../../../assets/logo.png";
 import Title from "../../common/Title";
+import {
+  useAboutUsQuery,
+  useCreateAboutUsMutation,
+} from "../../../redux/apiSlices/termsAndConditionSlice";
 
 const AboutUs = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
 
-  const isLoading = false;
-
   useEffect(() => {
     setContent(content);
   }, []);
 
-  // const {
-  //   data: termsAndCondition,
-  //   isLoading,
-  //   refetch,
-  // } = useTermsAndConditionQuery(selectedTab);
+  const { data: aboutUs, isLoading, refetch } = useAboutUsQuery();
 
-  // const [updateTermsAndConditions] = useUpdateTermsAndConditionsMutation();
-
-  const termsAndCondition = [];
+  const [updateAboutUs] = useCreateAboutUsMutation();
 
   if (isLoading) {
     return (
@@ -37,18 +33,17 @@ const AboutUs = () => {
     );
   }
 
-  const termsAndConditionData = termsAndCondition?.content;
+  const termsAndConditionData = aboutUs?.content;
 
   const termsDataSave = async () => {
     const data = {
       content: content,
-      userType: selectedTab,
     };
 
     try {
-      const res = await updateTermsAndConditions(data).unwrap();
+      const res = await updateAboutUs(data).unwrap();
       if (res.success) {
-        toast.success("Terms and Conditions updated successfully");
+        toast.success("About Us updated successfully");
         setContent(res.data.content);
         refetch();
       } else {
@@ -64,18 +59,11 @@ const AboutUs = () => {
       <Title className="mb-4">About Us</Title>
 
       <JoditEditor
+        className="text-black"
         ref={editor}
         value={termsAndConditionData}
         onChange={(newContent) => {
           setContent(newContent);
-        }}
-        config={{
-          toolbarInline: true,
-          toolbarSticky: false,
-          style: {
-            backgroundColor: "#535045",
-            color: "white",
-          },
         }}
       />
 
@@ -83,7 +71,7 @@ const AboutUs = () => {
         <button
           onClick={termsDataSave}
           type="submit"
-          className="bg-[#FFB342] text-black w-[160px] h-[42px] rounded-lg"
+          className="bg-[#C4A862] text-lg font-semibold text-black w-[160px] h-[42px] rounded-lg"
         >
           Submit
         </button>

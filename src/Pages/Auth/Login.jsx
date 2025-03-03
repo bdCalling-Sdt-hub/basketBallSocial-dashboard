@@ -61,6 +61,7 @@ const Login = () => {
         <FormItem
           name="email"
           label="Email"
+          style={{ backgroundColor: "white" }}
           rules={[
             { required: true, message: "Please input your email!" },
             { type: "email", message: "Please enter a valid email!" },

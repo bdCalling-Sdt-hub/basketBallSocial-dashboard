@@ -12,21 +12,13 @@ const TermsAndCondition = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
 
-  const isLoading = false;
+  const {
+    data: termsAndCondition,
+    isLoading,
+    refetch,
+  } = useTermsAndConditionQuery();
 
-  useEffect(() => {
-    setContent(content);
-  }, []);
-
-  // const {
-  //   data: termsAndCondition,
-  //   isLoading,
-  //   refetch,
-  // } = useTermsAndConditionQuery(selectedTab);
-
-  // const [updateTermsAndConditions] = useUpdateTermsAndConditionsMutation();
-
-  const termsAndCondition = [];
+  const [updateTermsAndConditions] = useUpdateTermsAndConditionsMutation();
 
   if (isLoading) {
     return (
@@ -37,11 +29,11 @@ const TermsAndCondition = () => {
   }
 
   const termsAndConditionData = termsAndCondition?.content;
+  console.log(termsAndConditionData);
 
   const termsDataSave = async () => {
     const data = {
       content: content,
-      userType: selectedTab,
     };
 
     try {
@@ -63,18 +55,11 @@ const TermsAndCondition = () => {
       <Title className="mb-4">Terms and Conditions</Title>
 
       <JoditEditor
+        className="text-black"
         ref={editor}
         value={termsAndConditionData}
         onChange={(newContent) => {
           setContent(newContent);
-        }}
-        config={{
-          toolbarInline: true,
-          toolbarSticky: false,
-          style: {
-            backgroundColor: "#535045",
-            color: "white",
-          },
         }}
       />
 
@@ -82,7 +67,7 @@ const TermsAndCondition = () => {
         <button
           onClick={termsDataSave}
           type="submit"
-          className="bg-[#FFB342] text-black w-[160px] h-[42px] rounded-lg"
+          className="bg-[#C4A862] text-black text-lg font-semibold w-[160px] h-[42px] rounded-lg"
         >
           Submit
         </button>

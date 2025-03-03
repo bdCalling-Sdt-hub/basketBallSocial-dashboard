@@ -6,22 +6,14 @@ import toast from "react-hot-toast";
 import { useChangePasswordMutation } from "../../redux/apiSlices/authSlice";
 
 const ChangePassword = () => {
-  const isLoading = false;
   const [form] = Form.useForm();
   const [errorMessages, setErrorMessages] = useState({
     newPassError: "",
     conPassError: "",
   });
 
-  // const [changePassword, { isLoading }] = useChangePasswordMutation();
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <img src={logo} alt="" />
-      </div>
-    );
-  }
   const validatePasswordChange = (values) => {
     let errors = {};
 
@@ -74,9 +66,9 @@ const ChangePassword = () => {
           ]}
         >
           <Input.Password
-            style={{ background: "transparent", color: "white" }}
             placeholder="Enter current password"
-            className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500"
+            className="h-12 border border-gray-300 rounded-md focus:border-[#C4A862] focus:ring-0"
+            style={{ background: "#535045", color: "white" }}
           />
         </Form.Item>
 
@@ -95,9 +87,9 @@ const ChangePassword = () => {
           label={<p className="text-white">New Password</p>}
         >
           <Input.Password
-            style={{ background: "transparent", color: "white" }}
+            style={{ background: "#535045", color: "white" }}
             placeholder="Enter new password"
-            className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500"
+            className="h-12 border border-gray-300 rounded-md focus:border-[#C4A862] focus:ring-0"
           />
         </Form.Item>
 
@@ -118,9 +110,9 @@ const ChangePassword = () => {
           ]}
         >
           <Input.Password
-            style={{ background: "transparent", color: "white" }}
             placeholder="Enter confirm password"
-            className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500"
+            style={{ background: "#535045", color: "white" }}
+            className="h-12 border border-gray-300 rounded-md focus:border-[#C4A862] focus:ring-0"
           />
         </Form.Item>
 
@@ -144,7 +136,7 @@ const ChangePassword = () => {
             }}
             className="roboto-medium text-lg leading-4 font-semibold"
           >
-            Submit
+            {isLoading ? "Loading..." : "Change"}
           </Button>
         </Form.Item>
       </Form>

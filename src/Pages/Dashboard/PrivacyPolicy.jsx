@@ -12,19 +12,11 @@ const PrivacyPolicy = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
 
-  const isLoading = false;
+  console.log(content);
 
-  useEffect(() => {
-    setContent(content);
-  }, []);
+  const { data: privacyPolicy, isLoading, refetch } = usePrivacyPolicyQuery();
 
-  // const {
-  //   data: privacyPolicy,
-  //   isLoading,
-  //   refetch,
-  // } = usePrivacyPolicyQuery(selectedTab);
-
-  // const [updatePricyPolicy] = useUpdatePricyPolicyMutation();
+  const [updatePricyPolicy] = useUpdatePricyPolicyMutation();
 
   if (isLoading) {
     return (
@@ -34,14 +26,11 @@ const PrivacyPolicy = () => {
     );
   }
 
-  const privacyPolicy = [];
-
   const privacyPolicyData = privacyPolicy?.content;
 
   const termsDataSave = async () => {
     const data = {
       content: content,
-      userType: selectedTab,
     };
 
     try {
@@ -60,20 +49,13 @@ const PrivacyPolicy = () => {
   };
 
   return (
-    <div className="p-5 text-white">
+    <div className="p-5">
       <Title className="mb-4">Privacy Policy</Title>
 
       <JoditEditor
+        className="text-black"
         ref={editor}
         value={privacyPolicyData}
-        config={{
-          toolbarInline: true,
-          toolbarSticky: false,
-          style: {
-            backgroundColor: "#535045",
-            color: "white",
-          },
-        }}
         onChange={(newContent) => {
           setContent(newContent);
         }}
@@ -83,7 +65,7 @@ const PrivacyPolicy = () => {
         <button
           onClick={termsDataSave}
           type="submit"
-          className="bg-[#FFB342] text-black w-[160px] h-[42px] rounded-lg"
+          className="bg-[#C4A862] text-lg font-semibold text-black w-[160px] h-[42px] rounded-lg"
         >
           Submit
         </button>

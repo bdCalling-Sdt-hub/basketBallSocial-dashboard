@@ -1,5 +1,11 @@
 import { Form, Input, Modal } from "antd";
 import React, { useEffect } from "react";
+import {
+  useCreateFaqMutation,
+  useUpdateFaqMutation,
+} from "../../../redux/apiSlices/faqSlice";
+import toast from "react-hot-toast";
+import { RxCross2 } from "react-icons/rx";
 
 const FaqModal = ({
   setModalData,
@@ -8,6 +14,9 @@ const FaqModal = ({
   setOpenAddModel,
 }) => {
   const [form] = Form.useForm();
+
+  const [updateFaq] = useUpdateFaqMutation();
+  const [createFaq] = useCreateFaqMutation();
 
   useEffect(() => {
     if (modalData) {
@@ -18,7 +27,43 @@ const FaqModal = ({
     }
   }, [modalData]);
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
+    if (modalData) {
+      try {
+        const response = await updateFaq({
+          data: values,
+          id: modalData?._id,
+        }).unwrap();
+        if (response?.success) {
+          toast.success(response?.message);
+          setOpenAddModel(false);
+          setModalData(null);
+          form.resetFields();
+        } else {
+          toast.error(response?.message);
+        }
+      } catch (error) {
+        toast.error(
+          error?.data?.message || "An error occurred. Please try again."
+        );
+      }
+    } else {
+      try {
+        const response = await createFaq(values).unwrap();
+        if (response?.success) {
+          toast.success(response?.message);
+          setOpenAddModel(false);
+          setModalData(null);
+          form.resetFields();
+        } else {
+          toast.error(response?.message);
+        }
+      } catch (error) {
+        toast.error(
+          error?.data?.message || "An error occurred. Please try again."
+        );
+      }
+    }
     console.log(values);
   };
   return (
@@ -32,6 +77,8 @@ const FaqModal = ({
       }}
       width={500}
       footer={false}
+      className="custom-modal text-white"
+      closeIcon={<RxCross2 style={{ color: "red" }} />}
     >
       <div className="p-6">
         <h1
@@ -44,7 +91,7 @@ const FaqModal = ({
           <Form.Item
             name="question"
             style={{ marginBottom: "16px" }}
-            label={<p style={{ display: "block" }}>Question</p>}
+            label={<p style={{ display: "block", color: "white" }}>Question</p>}
           >
             <Input
               type="Text"
@@ -53,7 +100,8 @@ const FaqModal = ({
                 border: "1px solid #E0E4EC",
                 padding: "10px",
                 height: "52px",
-                background: "white",
+                background: "#535045",
+                color: "white",
                 borderRadius: "8px",
                 outline: "none",
                 width: "100%",
@@ -63,7 +111,7 @@ const FaqModal = ({
           <Form.Item
             name="answer"
             style={{ marginBottom: "16px" }}
-            label={<p style={{ display: "block" }}>Answer</p>}
+            label={<p style={{ display: "block", color: "white" }}>Answer</p>}
           >
             <Input.TextArea
               type="Text"
@@ -72,7 +120,8 @@ const FaqModal = ({
                 border: "1px solid #E0E4EC",
                 padding: "10px",
                 height: "152px",
-                background: "white",
+                background: "#535045",
+                color: "white",
                 borderRadius: "8px",
                 outline: "none",
                 width: "100%",

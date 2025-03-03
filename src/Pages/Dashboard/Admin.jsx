@@ -3,37 +3,20 @@ import React, { useState } from "react";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import CreateAdmin from "../../components/ui/Admin/CreateAdmin";
 import Title from "../../components/common/Title";
-
-const data = [
-  {
-    key: 1,
-    name: "sinchan",
-    email: "sinchan@gmail.com",
-  },
-  {
-    key: 2,
-    name: "sinchan",
-    email: "sinchan@gmail.com",
-  },
-  {
-    key: 3,
-    name: "sinchan",
-    email: "sinchan@gmail.com",
-  },
-  {
-    key: 4,
-    name: "sinchan",
-    email: "sinchan@gmail.com",
-  },
-  {
-    key: 5,
-    name: "sinchan",
-    email: "sinchan@gmail.com",
-  },
-];
+import {
+  useDeleteAdminMutation,
+  useGetAllAdminsQuery,
+} from "../../redux/apiSlices/adminManagementSlice";
+import toast from "react-hot-toast";
 
 const Admin = () => {
   const [open, setOpen] = useState(false);
+
+  const { data: admin, isLoading } = useGetAllAdminsQuery();
+  const [deleteAdmin] = useDeleteAdminMutation();
+
+  const adminData = admin?.data;
+  console.log(adminData);
 
   const columns = [
     {
@@ -57,10 +40,30 @@ const Admin = () => {
       dataIndex: "action",
       key: "action",
       render: (_, record) => (
-        <RiDeleteBin5Line size={24} className="text-red-600" />
+        <RiDeleteBin5Line
+          onClick={() => handleDelete(record._id)}
+          size={24}
+          className="text-red-600 cursor-pointer"
+        />
       ),
     },
   ];
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await deleteAdmin(id).unwrap();
+      if (response?.success) {
+        toast.success(response?.message);
+      } else {
+        toast.error(response?.message);
+      }
+    } catch (error) {
+      toast.error(
+        error?.data?.message || "An error occurred. Please try again."
+      );
+    }
+  };
+
   return (
     <div className="p-5 text-white">
       {/* header */}
@@ -93,8 +96,9 @@ const Admin = () => {
       >
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={adminData}
           pagination={{ pageSize: 5 }}
+          rowKey="_id"
         />
       </ConfigProvider>
       <CreateAdmin open={open} setOpen={setOpen} />

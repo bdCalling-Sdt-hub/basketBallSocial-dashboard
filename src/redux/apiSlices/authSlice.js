@@ -53,7 +53,7 @@ const authSlice = api.injectEndpoints({
       query: (value) => {
         return {
           method: "POST",
-          url: "/auth/change-password",
+          url: "/user/change-password",
           body: value,
         };
       },

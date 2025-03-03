@@ -111,11 +111,15 @@
   color: #c4a862 !important; /* Keep the text color as desired */
 }
 
-.ant-input {
-  background-color: #535045 !important;
-  color: #ffffff !important;
-}
-
 .ant-switch-checked {
   background-color: #c4a862 !important;
+}
+
+.custom-modal .ant-modal-content {
+  background-color: #1e1e1e;
+}
+
+.custom-modal .ant-modal-header {
+  background-color: #fdf5ec;
+  color: white;
 }
