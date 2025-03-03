@@ -106,6 +106,16 @@
   background-color: #c4a862 !important;
 }
 
+.ant-pagination-item:hover {
+  /* background: transparent; or choose a different color */
+  color: #c4a862 !important; /* Keep the text color as desired */
+}
+
+.ant-input {
+  background-color: #535045 !important;
+  color: #ffffff !important;
+}
+
 .ant-switch-checked {
   background-color: #c4a862 !important;
 }

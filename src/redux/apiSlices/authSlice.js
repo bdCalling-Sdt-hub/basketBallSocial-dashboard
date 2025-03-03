@@ -31,7 +31,7 @@ const authSlice = api.injectEndpoints({
       query: (data) => {
         return {
           method: "POST",
-          url: "auth/forget-password",
+          url: "auth/forgot-password",
           body: data,
         };
       },
@@ -79,7 +79,7 @@ const authSlice = api.injectEndpoints({
       query: (data) => {
         return {
           method: "PATCH",
-          url: "/admin/profile",
+          url: "user",
           body: data,
           headers: {
             Authorization: `Bearer ${JSON.parse(
@@ -113,7 +113,7 @@ const authSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: "/admin/profile",
+          url: "/user/profile",
         };
       },
     }),

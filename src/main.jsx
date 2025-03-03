@@ -32,7 +32,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <I18nextProvider i18n={i18next}>
       <Provider store={store}>
         <App />
-        <Toaster />
+        <Toaster position="top-center" />
       </Provider>
     </I18nextProvider>
   </React.StrictMode>

@@ -139,10 +139,10 @@ const ChangePassword = () => {
               width: 178,
               height: 48,
               fontWeight: "400px",
-              background: "#ffb342",
+              background: "#C4A862",
               color: "black",
             }}
-            className="roboto-medium text-sm leading-4"
+            className="roboto-medium text-lg leading-4 font-semibold"
           >
             Submit
           </Button>

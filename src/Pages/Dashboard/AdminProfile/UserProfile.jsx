@@ -3,8 +3,6 @@ import { Button, ConfigProvider, Form, Input } from "antd";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
 import {
   useFetchAdminProfileQuery,
   useUpdateAdminProfileMutation,
@@ -12,6 +10,7 @@ import {
 import logo from "../../../assets/randomProfile2.jpg";
 import toast from "react-hot-toast";
 import logo2 from "../../../assets/logo.png";
+import { imageUrl } from "../../../redux/api/baseApi";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -21,25 +20,26 @@ const PersonalInfo = () => {
   const [file, setFile] = useState(null);
   const [form] = Form.useForm();
 
-  const isLoading = false;
-
-  // const { data: fetchAdminProfile, isLoading } = useFetchAdminProfileQuery();
-  // const [updateAdminProfile] = useUpdateAdminProfileMutation();
-
-  const fetchAdminProfile = [];
+  const { data: fetchAdminProfile, isLoading } = useFetchAdminProfileQuery();
+  const [updateAdminProfile] = useUpdateAdminProfileMutation();
 
   const adminData = fetchAdminProfile?.data;
+  console.log(adminData);
 
   useEffect(() => {
     if (adminData) {
       form.setFieldsValue({
-        name: adminData?.name,
-        email: adminData?.email,
-        address: adminData?.address,
-        phone: adminData?.contact,
+        name: adminData?.name || "",
+        email: adminData?.email || "",
+        role: adminData?.role || "",
+        phone: adminData?.contact || "",
       });
-      setImgURL(`${baseUrl}${adminData?.profileImg}`);
-      setContact(adminData?.contact);
+      setImgURL(
+        adminData?.profile?.startsWith("http")
+          ? adminData?.profile
+          : `${imageUrl}/${adminData?.profile}`
+      );
+      setContact(adminData?.contact || "");
     }
   }, [form, adminData]);
 
@@ -61,12 +61,13 @@ const PersonalInfo = () => {
   };
 
   const onFinish = async (values) => {
+    console.log(values);
     try {
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("email", values.email);
-      formData.append("address", values.address);
-      formData.append("contact", contact);
+      formData.append("role", values.role);
+      formData.append("contact", values.phone);
 
       if (file) {
         formData.append("image", file);
@@ -111,21 +112,7 @@ const PersonalInfo = () => {
               label={<p className="text-[#ffffff] py-1">Name</p>}
               rules={[{ required: true, message: "Please enter your name" }]}
             >
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Input: {
-                      colorBgContainer: "#535045",
-                      backgroundColor: "#535045",
-                      colorBgInput: "#535045",
-                      hoverColorBgInput: "#535045",
-                      colorText: "#ffffff",
-                    },
-                  },
-                }}
-              >
-                <Input className="py-3 rounded-xl" />
-              </ConfigProvider>
+              <Input className="py-3 rounded-xl" />
             </Form.Item>
 
             <Form.Item
@@ -136,42 +123,14 @@ const PersonalInfo = () => {
                 { required: true, message: "Please enter your email" },
               ]}
             >
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Input: {
-                      colorBgContainer: "#535045",
-                      backgroundColor: "#535045",
-                      colorBgInput: "#535045",
-                      hoverColorBgInput: "#535045",
-                      colorText: "#ffffff",
-                    },
-                  },
-                }}
-              >
-                <Input className="py-3 rounded-xl" />
-              </ConfigProvider>
+              <Input className="py-3 rounded-xl" readOnly />
             </Form.Item>
             <Form.Item
-              name="address"
-              label={<p className="text-[#ffffff] py-1">Address</p>}
-              rules={[{ required: true, message: "Please enter your Address" }]}
+              name="role"
+              label={<p className="text-[#ffffff] py-1">Role</p>}
+              rules={[{ required: true, message: "Please enter your role" }]}
             >
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Input: {
-                      colorBgContainer: "#535045",
-                      backgroundColor: "#535045",
-                      colorBgInput: "#535045",
-                      hoverColorBgInput: "#535045",
-                      colorText: "#ffffff",
-                    },
-                  },
-                }}
-              >
-                <Input className="py-3 rounded-xl" />
-              </ConfigProvider>
+              <Input className="py-3 rounded-xl" readOnly />
             </Form.Item>
 
             <Form.Item
@@ -181,13 +140,7 @@ const PersonalInfo = () => {
                 { required: true, message: "Please enter your phone number" },
               ]}
             >
-              <PhoneInput
-                country="us"
-                value={contact}
-                onChange={setContact}
-                inputClass="!w-full !px-4 !py-3 !py-5 !bg-[#535045] !ps-12 !border !border-gray-300 !rounded-lg !focus:outline-none !focus:ring-2 !focus:ring-blue-400"
-                containerClass="!w-full"
-              />
+              <Input className="py-3 rounded-xl" />
             </Form.Item>
 
             <Form.Item>

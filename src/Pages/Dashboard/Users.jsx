@@ -224,29 +224,6 @@ const Users = () => {
       dataIndex: "totalServices",
       key: "totalServices",
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (status) => {
-        let color;
-        switch (status) {
-          case "VIP":
-            color = "orange";
-            break;
-          case "Regular":
-            color = "blue";
-            break;
-          case "New":
-            color = "green";
-            break;
-          default:
-            color = "green";
-        }
-
-        return <span style={{ color }}>{status}</span>;
-      },
-    },
 
     {
       title: "Actions",

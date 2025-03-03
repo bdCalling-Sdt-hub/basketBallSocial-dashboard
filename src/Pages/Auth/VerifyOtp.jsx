@@ -6,6 +6,7 @@ import {
   useOtpVerifyMutation,
   // useResendOtpMutation,
 } from "../../redux/apiSlices/authSlice";
+import toast from "react-hot-toast";
 
 const { Text } = Typography;
 
@@ -49,7 +50,9 @@ const VerifyOtp = () => {
         console.error("Failed to resend OTP");
       }
     } catch (error) {
-      console.error("Error resending OTP:", error);
+      toast.error(
+        error?.data?.message || "An error occurred. Please try again."
+      );
     }
   };
 
@@ -75,7 +78,7 @@ const VerifyOtp = () => {
               borderRadius: "8px",
               margin: "16px",
               fontSize: "20px",
-              border: "1px solid #8b0000",
+              border: "1px solid #C4A862",
               color: "#2B2A2A",
               outline: "none",
               marginBottom: 10,
@@ -105,8 +108,8 @@ const VerifyOtp = () => {
               border: "1px solid #d9d9d9",
               outline: "none",
               boxShadow: "none",
-              background: "#8b0000",
-              color: "white",
+              background: "#C4A862",
+              color: "black",
             }}
           >
             Verify
