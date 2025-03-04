@@ -44,7 +44,7 @@ const Header = () => {
               : logo
           }
           alt="person-male--v2"
-          className="clip"
+          className="clip object-cover"
         />
         <div className="flex pr-2 flex-col">
           {isLoading ? (

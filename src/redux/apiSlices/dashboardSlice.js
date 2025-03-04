@@ -10,29 +10,30 @@ const dashboardSlice = api.injectEndpoints({
         };
       },
     }),
-    overAllState: builder.query({
-      query: ({ range }) => {
+
+    visitorsState: builder.query({
+      query: () => {
         return {
           method: "GET",
-          url: `/dashboard/overall-stat?range=${range}`,
+          url: "/visitors",
         };
       },
     }),
 
-    bestServices: builder.query({
+    userStatistics: builder.query({
       query: () => {
         return {
           method: "GET",
-          url: "/dashboard/best-services",
+          url: "/admin/users",
         };
       },
     }),
 
-    vendorsConversionData: builder.query({
+    earningStatistics: builder.query({
       query: () => {
         return {
           method: "GET",
-          url: "/dashboard/vendor-order-conversion-rate",
+          url: "/admin/earning",
         };
       },
     }),
@@ -41,7 +42,7 @@ const dashboardSlice = api.injectEndpoints({
 
 export const {
   useGeneralStatsQuery,
-  useOverAllStateQuery,
-  useBestServicesQuery,
-  useVendorsConversionDataQuery,
+  useVisitorsStateQuery,
+  useUserStatisticsQuery,
+  useEarningStatisticsQuery,
 } = dashboardSlice;

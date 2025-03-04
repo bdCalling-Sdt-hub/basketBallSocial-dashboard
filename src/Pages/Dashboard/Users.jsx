@@ -3,10 +3,14 @@ import { Table, Button, Space, Avatar, ConfigProvider } from "antd";
 import { Link } from "react-router-dom";
 import randomImg from "../../assets/randomProfile2.jpg";
 import { FaEye, FaTrash } from "react-icons/fa6";
+import { useUsersQuery } from "../../redux/apiSlices/userSlice";
+import { imageUrl } from "../../redux/api/baseApi";
 
 const Users = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [pageSize, setPageSize] = useState(10);
+
+  const { data: userData, isLoading } = useUsersQuery();
 
   // Dummy data for users
   const users = {
@@ -172,7 +176,8 @@ const Users = () => {
     },
   };
 
-  const data = users?.data?.data;
+  const data = userData?.data;
+  console.log(data);
 
   const onSelectChange = (newSelectedRowKeys) => {
     console.log("selectedRowKeys changed: ", newSelectedRowKeys);
@@ -181,9 +186,10 @@ const Users = () => {
 
   const columns = [
     {
-      title: "Id",
-      dataIndex: "id",
-      key: "id",
+      title: "Serial",
+      dataIndex: "serial",
+      key: "serial",
+      render: (text, record, index) => <p>{index + 1}</p>,
     },
     {
       title: "Name",
@@ -191,10 +197,10 @@ const Users = () => {
       key: "name",
       render: (text, record) => {
         const name = record.name || "Unknown";
-        const imgUrl = record.profileImg || randomImg;
+        const imgUrl = record.profile || randomImg;
         const fullImgUrl = imgUrl.startsWith("http")
           ? imgUrl
-          : `${import.meta.env.VITE_BASE_URL}${imgUrl}`;
+          : `${imageUrl}${imgUrl}`;
 
         return (
           <Space>
@@ -208,23 +214,40 @@ const Users = () => {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      render: (text, record) => <p>{record.email || "N/A"}</p>,
     },
     {
       title: "Phone Number",
-      dataIndex: "phoneNumber",
-      key: "phoneNumber",
+      dataIndex: "contact",
+      key: "contact",
+      render: (text, record) => <p>{record.contact || "N/A"}</p>,
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Occupation",
+      dataIndex: "occupation",
+      key: "occupation",
+      render: (text, record) => <p>{record.occupation || "N/A"}</p>,
     },
     {
-      title: "Activity",
-      dataIndex: "totalServices",
-      key: "totalServices",
+      title: "Organization",
+      dataIndex: "organization",
+      key: "organization",
+      render: (text, record) => <p>{record.organization || "N/A"}</p>,
     },
-
+    {
+      title: "Interested In",
+      dataIndex: "interest",
+      key: "interest",
+      render: (text, record) => (
+        <p>
+          {record?.interest?.length > 0
+            ? record?.interest?.map((interest) => (
+                <span key={interest}>{interest}, </span>
+              ))
+            : "N/A"}
+        </p>
+      ),
+    },
     {
       title: "Actions",
       key: "actions",
@@ -263,6 +286,7 @@ const Users = () => {
           dataSource={data}
           pagination={{ pageSize, onChange: () => setPageSize() }}
           scroll={{ x: 1000 }}
+          rowKey="_id"
         />
       </ConfigProvider>
     </div>
