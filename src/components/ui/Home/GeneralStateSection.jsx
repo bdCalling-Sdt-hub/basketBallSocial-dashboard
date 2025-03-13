@@ -1,25 +1,15 @@
 import { FaUsers } from "react-icons/fa6";
 import logo from "../../../assets/logo.png";
+import { useGeneralStatsQuery } from "../../../redux/apiSlices/dashboardSlice";
+import { Spin } from "antd";
 
 const GeneralStateSection = () => {
-  // Simulated dummy data
-  const generalState = {
-    data: {
-      totalActiveUsers: 1500,
-      newSignups: 120,
-      totalAvatars: 45,
-      totalCompletedOrders: 320,
-      totalServices: 75,
-      earnings: 320,
-    },
-  };
-
-  const isLoading = false; // Simulated loading state
+  const { data: generalState, isLoading } = useGeneralStatsQuery();
 
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <img src={logo} alt="" />
+        <Spin />
       </div>
     );
   }
@@ -35,7 +25,7 @@ const GeneralStateSection = () => {
         <div className="flex flex-col items-start">
           <h2 className="text-center text-md text-gray-400">Total User</h2>
           <h3 className="text-center text-2xl text-[#C4A862] font-semibold">
-            {state?.totalActiveUsers}
+            {state?.totalUser}
           </h3>
         </div>
       </div>
@@ -46,7 +36,7 @@ const GeneralStateSection = () => {
         <div className="flex flex-col items-start">
           <h2 className="text-center text-md  text-gray-400">Sold Avatars</h2>
           <h3 className="text-center text-2xl font-semibold text-[#C4A862]">
-            {state?.totalAvatars}
+            {state?.soldAvatarCount}
           </h3>
         </div>
       </div>
