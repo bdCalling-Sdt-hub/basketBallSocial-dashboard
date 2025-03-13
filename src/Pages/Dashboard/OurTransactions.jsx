@@ -1,81 +1,48 @@
 import React, { useState } from "react";
 import { Table, ConfigProvider } from "antd";
 import moment from "moment";
-
-const transactions = [
-  {
-    key: "1",
-    transactionId: "AVT001",
-    customerName: "Alice Johnson",
-    packageName: "Basic Avatar Pack",
-    price: 20,
-    adminEarning: 3,
-    date: "2024-06-15 10:30:00",
-  },
-  {
-    key: "2",
-    transactionId: "AVT002",
-    customerName: "Michael Brown",
-    packageName: "Premium Avatar Pack",
-    price: 50,
-    adminEarning: 7.5,
-    date: "2024-06-14 14:45:00",
-  },
-  {
-    key: "3",
-    transactionId: "AVT003",
-    customerName: "Samantha White",
-    packageName: "Exclusive Avatar Pack",
-    price: 100,
-    adminEarning: 15,
-    date: "2024-06-16 09:15:00",
-  },
-  {
-    key: "4",
-    transactionId: "AVT004",
-    customerName: "Daniel Green",
-    packageName: "Basic Avatar Pack",
-    price: 20,
-    adminEarning: 3,
-    date: "2024-06-10 11:00:00",
-  },
-  {
-    key: "5",
-    transactionId: "AVT005",
-    customerName: "Sophia Miller",
-    packageName: "Deluxe Avatar Pack",
-    price: 75,
-    adminEarning: 11.25,
-    date: "2024-06-12 17:20:00",
-  },
-  {
-    key: "6",
-    transactionId: "AVT006",
-    customerName: "Ethan Wilson",
-    packageName: "Ultimate Avatar Pack",
-    price: 150,
-    adminEarning: 22.5,
-    date: "2024-06-13 08:45:00",
-  },
-];
+import { useAvatarTransactionQuery } from "../../redux/apiSlices/abatarSlice";
 
 const OurTransactions = () => {
+  const [page, setPage] = useState(1);
+
+  const { data: avatarTransactions, isLoading } = useAvatarTransactionQuery({
+    page,
+    limit: 10,
+  });
+
+  const transactions = avatarTransactions?.data || [];
+
+  console.log(avatarTransactions);
+
   const columns = [
     {
-      title: "Serial No.",
-      dataIndex: "key",
-      key: "key",
+      title: "Serial",
+      dataIndex: "_id",
+      key: "_id",
+      render: (text, record, index) => index + 1,
     },
     {
       title: "Transaction ID",
-      dataIndex: "transactionId",
-      key: "transactionId",
+      dataIndex: "txid",
+      key: "txid",
     },
-    { title: "Customer Name", dataIndex: "customerName", key: "customerName" },
     {
-      title: "Package Name",
-      dataIndex: "packageName",
-      key: "packageName",
+      title: "Customer Name",
+      dataIndex: ["user", "name"],
+      key: "customerName",
+    },
+
+    {
+      title: "Email",
+      dataIndex: ["user", "email"],
+      key: "email",
+    },
+    {
+      title: "Occupation",
+      dataIndex: ["user", "occupation"],
+      key: "occupation",
+      render: (occupation) => occupation || "Not specified",
     },
     {
       title: "Price ($)",
@@ -85,10 +52,9 @@ const OurTransactions = () => {
     },
     {
       title: "Date & Time",
-      dataIndex: "date",
-      key: "date",
-      sorter: (a, b) => moment(a.date).valueOf() - moment(b.date).valueOf(),
-      render: (date) => moment(date).format("DD-MM-YYYY HH:mm A"),
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (date) => moment(date).format("DD-MM-YYYY HH:mm "),
     },
   ];
 
@@ -113,8 +79,14 @@ const OurTransactions = () => {
       >
         <Table
           columns={columns}
+          loading={isLoading}
+          rowKey="_id"
           dataSource={transactions}
-          pagination={{ pageSize: 5 }}
+          pagination={{
+            pageSize: avatarTransactions?.pagination?.limit,
+            total: avatarTransactions?.pagination?.total,
+            onChange: (page) => setPage(page),
+          }}
         />
       </ConfigProvider>
     </div>

@@ -82,7 +82,7 @@ const Faq = () => {
       <div className="mb-4 flex justify-between items-center w-full">
         <button
           onClick={() => setOpenAddModel(true)}
-          className="flex items-center gap-1 px-4 py-2 text-black bg-[#ffb342] rounded hover:bg-secondary hover:text-black transition-colors"
+          className="flex items-center gap-1 px-4 py-2 text-black bg-primary rounded hover:bg-secondary hover:text-black transition-colors"
         >
           <FaPlus />
           Add FAQ
@@ -95,7 +95,7 @@ const Faq = () => {
             key={index}
             className="flex justify-between items-start gap-4 p-4 rounded-lg bg-[#1e1e1e]"
           >
-            <GoQuestion color="#ffb342" size={25} className="mt-3" />
+            <GoQuestion color="#c4a862" size={25} className="mt-3" />
             <div className="flex-1">
               <p className="text-base font-medium rounded-xl py-2 px-4 flex items-center gap-8">
                 <span className="flex-1 text-white">{item?.question}</span>

@@ -1,111 +1,217 @@
 import { useState } from "react";
-import { Modal, Input, Button, Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import avatar1 from "../../assets/avatar1.png";
-import { Link } from "react-router-dom";
+import {
+  Modal,
+  Input,
+  Button,
+  Upload,
+  Spin,
+  Select,
+  Pagination,
+  Form,
+} from "antd";
+import whiteBg from "../../assets/whiteBG.png";
 import { FaPlus } from "react-icons/fa6";
+import {
+  useAddAvatarMutation,
+  useAvatarsQuery,
+} from "../../redux/apiSlices/abatarSlice";
+import { imageUrl } from "../../redux/api/baseApi";
+import toast from "react-hot-toast";
+import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 
-const initialAvatars = [
-  { id: "1", img: avatar1, title: "Avatar 1", price: "Free" },
-  { id: "2", img: avatar1, title: "Avatar 2", price: "$15" },
-  { id: "3", img: avatar1, title: "Avatar 3", price: "$20" },
-  { id: "4", img: avatar1, title: "Avatar 4", price: "$25" },
-  { id: "5", img: avatar1, title: "Avatar 5", price: "$30" },
-  { id: "6", img: avatar1, title: "Avatar 6", price: "$35" },
-  { id: "7", img: avatar1, title: "Avatar 7", price: "$40" },
-  { id: "8", img: avatar1, title: "Avatar 8", price: "$45" },
-  { id: "9", img: avatar1, title: "Avatar 9", price: "$50" },
-  { id: "10", img: avatar1, title: "Avatar 10", price: "$55" },
-];
+const { Option } = Select;
 
 const AvatarSettings = () => {
-  const [avatars, setAvatars] = useState(initialAvatars);
+  const [form] = Form.useForm();
+  const [imgURL, setImgURL] = useState();
+  const [file, setFile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newAvatar, setNewAvatar] = useState({
-    title: "",
-    price: "",
-    img: avatar1,
-  });
+  const [page, setPage] = useState(1);
 
-  const handleAddAvatar = () => {
-    setAvatars([...avatars, { ...newAvatar, id: avatars.length + 1 }]);
-    setIsModalOpen(false);
-    setNewAvatar({ title: "", price: "", img: avatar1 });
+  const { data: avatarsDetails, isLoading } = useAvatarsQuery({
+    page,
+    limit: 24,
+  });
+  const [addAvatar] = useAddAvatarMutation();
+
+  const avatarsData = avatarsDetails?.data?.avatars || [];
+  const totalAvatars = avatarsDetails?.data?.pagination?.total || 0;
+  const pagination = avatarsDetails?.data?.pagination;
+
+  const handleAddAvatar = async (values) => {
+    const formData = new FormData();
+    formData.append("type", values.type);
+    formData.append("price", values.price);
+    formData.append("icon", file);
+
+    try {
+      const response = await addAvatar(formData).unwrap();
+      if (response.success) {
+        toast.success("Avatar added successfully!");
+        setIsModalOpen(false);
+        form.resetFields();
+        setImgURL();
+        setFile(null);
+      }
+    } catch (error) {
+      console.error("Failed to add avatar:", error);
+    }
   };
 
   const handleImageUpload = ({ file }) => {
+    if (file.type !== "image/png") {
+      alert("Only PNG files are allowed.");
+      return false; // Prevent upload
+    }
     const reader = new FileReader();
     reader.onload = () => {
-      setNewAvatar((prev) => ({ ...prev, img: reader.result }));
+      form.setFieldsValue({ icon: reader.result }); // Set the base64 image to the form
     };
     reader.readAsDataURL(file);
+    return false; // Prevent default upload behavior
+  };
+
+  const onChangeImage = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const imgUrl = URL.createObjectURL(selectedFile);
+      setImgURL(imgUrl);
+      setFile(selectedFile);
+    }
   };
 
   return (
     <div className="p-5 text-white">
       <div className="flex justify-between items-center">
-        <h1 className="font-bold text-2xl">Avatar Settings</h1>
+        <h1 className="font-bold text-2xl mt-5">All Avatars</h1>
         <Button
-          className="bg-primary px-7 py-5 rounded-md border-none"
+          className="bg-primary px-7 py-5 rounded-md border-none flex items-center gap-2"
           onClick={() => setIsModalOpen(true)}
         >
           <FaPlus /> Add Avatar
         </Button>
       </div>
-      <h1 className="font-bold text-xl mt-5">
-        All Avatars: <span>{avatars.length}</span>
-      </h1>
-      <div className="grid grid-cols-8 gap-10 my-20">
-        {avatars.map((avatar) => (
-          <Link to={`/avatar-settings/${avatar.id}`}>
+
+      <div className="grid grid-cols-8 gap-10 my-10">
+        {isLoading ? (
+          <div className="flex items-center justify-center">
+            <Spin />
+          </div>
+        ) : (
+          avatarsData?.map((avatar) => (
             <div
-              key={avatar.id}
+              key={avatar._id}
               className="relative p-2 bg-slate-200 rounded-2xl h-[150px] flex items-center justify-end flex-col bg-opacity-10 cursor-pointer"
             >
-              <img className="absolute -top-6" src={avatar.img} alt="" />
-              <h1>{avatar.title}</h1>
-              <p
-                className={`${
-                  avatar.price === "Free" ? "text-green-500" : "text-primary"
-                }`}
+              <img
+                className="absolute -top-6 h-[70%] w-[80%] rounded-full"
+                src={
+                  avatar.avatar.startsWith("http")
+                    ? avatar.avatar
+                    : `${imageUrl}${avatar.avatar}`
+                }
+                alt={avatar.title}
+              />
+              <h1
+                className={
+                  avatar.type === "Free" ? "text-green-500" : "text-primary"
+                }
               >
-                {avatar.price}
-              </p>
+                {avatar.type}
+              </h1>
+              {avatar.type === "Paid" && (
+                <p className="text-primary">${avatar.price}</p>
+              )}
             </div>
-          </Link>
-        ))}
+          ))
+        )}
       </div>
+
+      <Pagination
+        className="text-center mt-5"
+        pageSize={pagination?.limit}
+        total={pagination?.total}
+        onChange={(page) => setPage(page)}
+      />
 
       {/* Modal for Adding Avatar */}
       <Modal
         title="Add New Avatar"
         open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
-        onOk={handleAddAvatar}
+        onCancel={() => {
+          setIsModalOpen(false);
+          form.resetFields(); // Reset the form when modal is closed
+        }}
+        onOk={() => {
+          form
+            .validateFields()
+            .then((values) => {
+              console.log("Submitting Avatar Data:", values);
+              handleAddAvatar(values);
+            })
+            .catch((error) => {
+              console.error("Validation Failed:", error);
+            });
+        }}
       >
-        <Input
-          className="mb-3"
-          placeholder="Title"
-          value={newAvatar.title}
-          onChange={(e) =>
-            setNewAvatar({ ...newAvatar, title: e.target.value })
-          }
-        />
-        <Input
-          className="mb-3"
-          placeholder="Price"
-          value={newAvatar.price}
-          onChange={(e) =>
-            setNewAvatar({ ...newAvatar, price: e.target.value })
-          }
-        />
-        <Upload
-          showUploadList={false}
-          beforeUpload={() => false}
-          customRequest={handleImageUpload}
-        >
-          <Button icon={<UploadOutlined />}>Upload Avatar Image</Button>
-        </Upload>
+        <Form form={form} layout="vertical">
+          <Form.Item
+            name="type"
+            label="Type"
+            initialValue="Free"
+            rules={[{ required: true, message: "Please select a type!" }]}
+          >
+            <Select>
+              <Option value="Free">Free</Option>
+              <Option value="Paid">Paid</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="price"
+            label="Price"
+            initialValue={0}
+            dependencies={["type"]}
+            rules={[
+              ({ getFieldValue }) => ({
+                required: getFieldValue("type") === "Paid",
+                message: "Please enter the price!",
+              }),
+            ]}
+          >
+            <Input
+              type="number"
+              placeholder="Price"
+              // disabled={form.getFieldValue("type") === "Free"}
+            />
+          </Form.Item>
+
+          <div className="flex flex-col items-center mb-4">
+            <input
+              onChange={onChangeImage}
+              type="file"
+              id="img"
+              style={{ display: "none" }}
+            />
+            <label
+              htmlFor="img"
+              className="relative w-full h-80 cursor-pointer border border-gray-300 bg-white bg-cover bg-center shadow-sm hover:shadow-lg transition-shadow duration-300"
+              style={{
+                backgroundImage: `url(${imgURL ? imgURL : whiteBg})`,
+              }}
+            >
+              {!imgURL && (
+                <div className="absolute inset-0 flex items-center justify-center hover:bg-gray-200 transition-colors">
+                  <MdOutlineAddPhotoAlternate
+                    size={60}
+                    className="text-gray-600"
+                  />
+                </div>
+              )}
+            </label>
+            <p className="mt-2 text-sm text-gray-500">Click to upload image</p>
+          </div>
+        </Form>
       </Modal>
     </div>
   );
