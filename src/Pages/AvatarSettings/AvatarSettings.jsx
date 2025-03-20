@@ -104,7 +104,7 @@ const AvatarSettings = () => {
               className="relative p-2 bg-slate-200 rounded-2xl h-[150px] flex items-center justify-end flex-col bg-opacity-10 cursor-pointer"
             >
               <img
-                className="absolute -top-6 h-[70%] w-[80%] rounded-full"
+                className="absolute -top-6 h-[70%]  rounded-full"
                 src={
                   avatar.avatar.startsWith("http")
                     ? avatar.avatar

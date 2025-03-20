@@ -253,11 +253,11 @@ const Users = () => {
       key: "actions",
       render: (text, record) => (
         <Space>
-          <Link to={`/user/profile/${record.id}`}>
+          {/* <Link to={`/user/profile/${record.id}`}>
             <FaEye size={20} />
-          </Link>
+          </Link> */}
           <div className="">
-            <FaTrash className="text-red-500" size={20} />
+            <FaTrash className="text-red-500 cursor-pointer" size={20} />
           </div>
         </Space>
       ),
